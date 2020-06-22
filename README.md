@@ -24,32 +24,35 @@ Docker for utilize azure kinect and body track on ros
     ```
     ./run
     ```
-
-##  Azure Kinect SDK
+## in Docker Container
+###  Azure Kinect SDK
 ```
 $  cd /home/Azure-Kinect-Sensor-SDK/build/bin
 $ ./k4aviewer 
 ```
 
-## Body Track SDK
+### Body Track SDK
 ```
 $  cd /home/Azure-Kinect-Samples/build/bin
 $ ./simple_3d_viewer
 ```
 
-## ROS without Body Track
+### ROS without Body Track
 ```
 $  roslaunch azure_kinect_ros_driver driver.launch 
 ```
 
-## ROS with Body Track
+### ROS with Body Track
 ```
 $  roslaunch azure_kinect_ros_driver bodyTrack.launch 
 ```
 
-## ROS with user's launch
-　Please put user's launch in `user_launch` folder.
-
+## Usage of user's .launch files
+　Please put user's launch files in `user_launch` folder.
+ 
+# TODO
+Explicit the essential softwares and optional softwarese necential softwares and optional softwares
+　
 # Lisence
 　[MIT](https://github.com/chakio/azure_kinect_ros/blob/master/LICENCE)
 
