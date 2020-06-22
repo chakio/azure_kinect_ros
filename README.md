@@ -14,7 +14,8 @@ Docker for utilize azure kinect and body track on ros
 * Docker Base Image : nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
 * ROS Distribution : melodic 
 
-# Usage (launch docker)
+# Usage
+## Launch Docker
 1. Docker Build
     ```
     ./build
@@ -23,7 +24,7 @@ Docker for utilize azure kinect and body track on ros
     ```
     ./run
     ```
-# Usage
+
 ##  Azure Kinect SDK
 ```
 $  cd /home/Azure-Kinect-Sensor-SDK/build/bin
