@@ -145,7 +145,6 @@ RUN wget https://www.nuget.org/api/v2/package/Microsoft.Azure.Kinect.Sensor/1.3.
 RUN mv microsoft.azure.kinect.sensor.1.3.0.nupkg  microsoft.azure.kinect.sensor.1.3.0.zip
 RUN unzip -d microsoft.azure.kinect.sensor.1.3.0 microsoft.azure.kinect.sensor.1.3.0.zip
 
-
 WORKDIR /home
 
 RUN git clone https://github.com/microsoft/Azure-Kinect-Sensor-SDK.git -b release/1.3.x
@@ -176,12 +175,6 @@ RUN chmod a+rwx /etc/udev/rules.d
 #######################################################################
 ##                         install body track                        ##
 #######################################################################
-#RUN  echo libk4a1.3 libk4a1.3/accept-eula boolean true | debconf-set-selections
-#RUN  echo libk4a1.3 libk4a1.3/accepted-eula-hash string 0f5d5c5de396e4fee4c0753a21fee0c1ed726cf0316204edda484f08cb266d76 | sudo debconf-set-selections -u
-
-#COPY /include/install_bodyTrack.sh /install_bodyTrack.sh
-#RUN chmod 777 /install_bodyTrack.sh
-#RUN /install_bodyTrack.sh
 RUN wget https://packages.microsoft.com/ubuntu/18.04/prod/pool/main/libk/libk4abt1.0-dev/libk4abt1.0-dev_1.0.0_amd64.deb
 RUN wget https://packages.microsoft.com/ubuntu/18.04/prod/pool/main/libk/libk4abt1.0/libk4abt1.0_1.0.0_amd64.deb
 RUN mkdir -p /install
