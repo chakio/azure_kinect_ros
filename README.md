@@ -47,10 +47,10 @@ $  roslaunch azure_kinect_ros_driver bodyTrack.launch
 ```
 
 ## ROS with user's launch
-　Please put user's launch in `users_launch` folder.
+　Please put user's launch in `user_launch` folder.
 
 # Lisence
-　[MIT](https://github.com/chakio)
+　[MIT](https://github.com/chakio/azure_kinect_ros/blob/master/LICENCE)
 
 # Author
 　[chakio](https://github.com/chakio)
