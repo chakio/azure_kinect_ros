@@ -1,0 +1,1 @@
+docker build --tag chakio/azure_kinect_ros:latest  .
