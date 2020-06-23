@@ -47,9 +47,6 @@ $  roslaunch azure_kinect_ros_driver bodyTrack.launch
 
 ## Usage of user's .launch files
 　Please put user's launch files in `user_launch` folder.
- 
-# TODO
-Explicit the essential softwares and optional softwarese necential softwares and optional softwares
 　
 # Lisence
 　[MIT](https://github.com/chakio/azure_kinect_ros/blob/master/LICENCE)
