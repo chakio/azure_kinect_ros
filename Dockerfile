@@ -1,24 +1,26 @@
-# This is an auto generated Dockerfile for ros:ros-core
-# generated from docker_images/create_ros_core_image.Dockerfile.em
 FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
 
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 ARG DEBIAN_FRONTEND=noninteractive
 
 #######################################################################
-##                      install common packages                      ##
+##                    install essential packages                     ##
 #######################################################################
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      pkg-config \
-      apt-utils \
-      python-pip \
-      build-essential \ 
-      net-tools \
-      gedit \
-      software-properties-common \
-      apt-transport-https && \
-   rm -rf /var/lib/apt/lists/*
+    pkg-config \
+    apt-utils \
+    python-pip \
+    build-essential \ 
+    software-properties-common \
+    apt-transport-https \
+    zip \
+    unzip \
+	g++ \
+	perl \
+    wget \
+    git \
+   && rm -rf /var/lib/apt/lists/*
 
 RUN python -m pip install --upgrade pip
 RUN apt-get update && apt-get install  -y python-ruamel.yaml && \
@@ -27,6 +29,7 @@ RUN apt-get update && apt-get install  -y python-ruamel.yaml && \
 #######################################################################
 ##                       install nvidia docker                       ##
 #######################################################################
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libxau-dev \
     libxdmcp-dev \
@@ -40,12 +43,14 @@ ENV NVIDIA_VISIBLE_DEVICES ${NVIDIA_VISIBLE_DEVICES:-all}
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 # install GLX-Gears
-RUN apt update && apt install -y --no-install-recommends mesa-utils x11-apps && rm -rf /var/lib/apt/lists/*
-
+RUN apt update && apt install -y --no-install-recommends \
+    mesa-utils x11-apps \
+    && rm -rf /var/lib/apt/lists/*
 
 #######################################################################
-##                            ros install                            ##
+##                            install ros                            ##
 #######################################################################
+
 # install packages
 RUN apt-get update && apt-get install -q -y \
     dirmngr \
@@ -85,9 +90,6 @@ COPY ./include/ros_entrypoint.sh /
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
 
-# install GLX-Gears
-RUN apt update && apt install -y --no-install-recommends mesa-utils x11-apps && rm -rf /var/lib/apt/lists/*
-
 #######################################################################
 ##                       install azure kinect                        ##
 #######################################################################
@@ -117,9 +119,7 @@ RUN apt-get update && apt-get install -y \
     usbutils \
     libusb-1.0-0-dev \
     openssl \
-    libssl-dev \
-    wget \
-    git  && \
+    libssl-dev && \
     rm -rf /var/lib/apt/lists/*
 
 # update cmake
@@ -131,16 +131,8 @@ RUN ./bootstrap
 RUN make
 RUN make install
 
-RUN apt-get update && apt-get install -y \
-	g++ \
-	perl
-
 # install azure kinect sdk
 WORKDIR /
-RUN apt-get update && apt-get install -y \
-    zip \
-    unzip && \
-   rm -rf /var/lib/apt/lists/*
 RUN wget https://www.nuget.org/api/v2/package/Microsoft.Azure.Kinect.Sensor/1.3.0 -O microsoft.azure.kinect.sensor.1.3.0.nupkg 
 RUN mv microsoft.azure.kinect.sensor.1.3.0.nupkg  microsoft.azure.kinect.sensor.1.3.0.zip
 RUN unzip -d microsoft.azure.kinect.sensor.1.3.0 microsoft.azure.kinect.sensor.1.3.0.zip
@@ -169,21 +161,19 @@ RUN mkdir -p /etc/udev/rules.d/
 RUN cp /home/Azure-Kinect-Sensor-SDK/scripts/99-k4a.rules /etc/udev/rules.d/99-k4a.rules
 RUN chmod a+rwx /etc/udev/rules.d
 
-
-
-
 #######################################################################
 ##                         install body track                        ##
 #######################################################################
+
 RUN wget https://packages.microsoft.com/ubuntu/18.04/prod/pool/main/libk/libk4abt1.0-dev/libk4abt1.0-dev_1.0.0_amd64.deb
 RUN wget https://packages.microsoft.com/ubuntu/18.04/prod/pool/main/libk/libk4abt1.0/libk4abt1.0_1.0.0_amd64.deb
 RUN mkdir -p /install
 RUN dpkg -x ./libk4abt1.0-dev_1.0.0_amd64.deb /install/libk4abt1.0
 RUN dpkg -x ./libk4abt1.0_1.0.0_amd64.deb /install/libk4abt1.0
 RUN apt-get update && apt-get install -y \
-    libxi-dev \
-    nautilus
-
+    libxi-dev && \
+    rm -rf /var/lib/apt/lists/*
+    
 COPY /include/k4abtConfig.cmake /install/libk4abt1.0/usr/lib/cmake/k4abt/k4abtConfig.cmake 
 
 RUN git clone --recursive https://github.com/microsoft/Azure-Kinect-Samples.git
@@ -234,8 +224,19 @@ RUN apt-get update && apt-get install -y \
    rm -rf /var/lib/apt/lists/*
 
 #######################################################################
+##                     install optional packages                     ##
+#######################################################################
+
+RUN apt-get update && apt-get install -y \
+    nautilus\
+    net-tools \
+    gedit \
+    && rm -rf /var/lib/apt/lists/*
+
+#######################################################################
 ##                         catkin setting                            ##
 #######################################################################
+
 #init catkin_ws
 RUN mkdir -p /catkin_ws/src && \
    cd /catkin_ws/src && \
@@ -253,6 +254,7 @@ RUN echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
 #######################################################################
 ##                           ros settings                            ##
 #######################################################################
+
 RUN echo "export PS1='\[\e[1;31;40m\]AzureKinect\[\e[0m\] \u:\w\$ '">> ~/.bashrc
 
 
