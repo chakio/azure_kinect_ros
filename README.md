@@ -1,5 +1,5 @@
 # azure_kinect_ros
-Docker for utilize azure kinect and body track on ros
+Docker for utilizing azure kinect and body track on ros
 
 # Environment 
 * microsoft/Azure Kinect Sensor SDK Version : [1.3](https://github.com/microsoft/Azure-Kinect-Sensor-SDK/tree/release/1.3.x)
@@ -16,11 +16,11 @@ Docker for utilize azure kinect and body track on ros
 ## Launch Docker
 1. Docker Build
     ```
-    ./build
+    $ ./build
     ```
 2. Docker Run
     ```
-    ./run
+    $ ./run
     ```
 ## in Docker Container
 ###  Azure Kinect SDK
