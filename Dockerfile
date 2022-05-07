@@ -55,8 +55,7 @@ RUN apt update && apt install -y --no-install-recommends \
 RUN apt-get update && apt-get install -q -y \
     dirmngr \
     gnupg2 \
-    lsb-release \
-    && rm -rf /var/lib/apt/lists/*
+    lsb-release
 # setup sources.list
 RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list
 # setup keys
@@ -65,8 +64,7 @@ RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E
 RUN apt-get update && apt-get install -y \
     python-rosinstall \
     python-rosdep \
-    python-vcstools \
-    && rm -rf /var/lib/apt/lists/*
+    python-vcstools 
 
 # setup environment
 ENV LANG C.UTF-8
@@ -78,8 +76,10 @@ RUN rosdep update
 
 # install bootstrap tools
 RUN apt-get update && apt-get install -y \
-    ros-melodic-desktop \
-    && rm -rf /var/lib/apt/lists/*
+    ros-melodic-desktop-full
+
+RUN apt-get update && apt-get install -y \
+    curl
 
 # install ros packages
 ENV ROS_DISTRO melodic
@@ -102,10 +102,9 @@ RUN apt-get update && apt-get install -y \
     doxygen \
     clang \
     gcc-multilib-arm-linux-gnueabihf \
-    g++-multilib-arm-linux-gnueabihf && \
-   rm -rf /var/lib/apt/lists/*
+    g++-multilib-arm-linux-gnueabihf
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
     freeglut3-dev \
     libgl1-mesa-dev \
     mesa-common-dev \
@@ -119,9 +118,7 @@ RUN apt-get update && apt-get install -y \
     usbutils \
     libusb-1.0-0-dev \
     openssl \
-    libssl-dev && \
-    rm -rf /var/lib/apt/lists/*
-
+    libssl-dev
 # update cmake
 RUN wget https://cmake.org/files/v3.16/cmake-3.16.5.tar.gz  -O cmake-3.16.5.tar.gz
 RUN tar -zxvf cmake-3.16.5.tar.gz 
@@ -171,8 +168,7 @@ RUN mkdir -p /install
 RUN dpkg -x ./libk4abt1.0-dev_1.0.0_amd64.deb /install/libk4abt1.0
 RUN dpkg -x ./libk4abt1.0_1.0.0_amd64.deb /install/libk4abt1.0
 RUN apt-get update && apt-get install -y \
-    libxi-dev && \
-    rm -rf /var/lib/apt/lists/*
+    libxi-dev
     
 COPY /include/k4abtConfig.cmake /install/libk4abt1.0/usr/lib/cmake/k4abt/k4abtConfig.cmake 
 
@@ -207,21 +203,14 @@ COPY /include/CMakeLists.txt /home/Azure-Kinect-Samples/body-tracking-samples/si
 
 ENV PATH=${PATH}:/install/libk4abt1.0/usr/:/install/libk4abt1.0/lib/
 ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/install/libk4abt1.0/usr/lib/:/home/Azure-Kinect-Sensor-SDK/build/bin/
-RUN cd /home/Azure-Kinect-Samples &&\
-   mkdir -p build && \
-   cd build &&\
-   cmake .. -GNinja &&\
-   ninja
+# RUN cd /home/Azure-Kinect-Samples &&\
+#    mkdir -p build && \
+#    cd build &&\
+#    cmake .. -GNinja &&\
+#    ninja
 
 RUN cp -r /install/libk4abt1.0/usr/bin/dnn_model_2_0.onnx  /usr/bin/
 
-#######################################################################
-##                   install additional packages                     ##
-#######################################################################
-
-RUN apt-get update && apt-get install -y \
-    ros-melodic-tf2-geometry-msgs && \
-   rm -rf /var/lib/apt/lists/*
 
 #######################################################################
 ##                     install optional packages                     ##
@@ -230,8 +219,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
     nautilus\
     net-tools \
-    gedit \
-    && rm -rf /var/lib/apt/lists/*
+    gedit
 
 #######################################################################
 ##                         catkin setting                            ##
@@ -250,6 +238,7 @@ RUN cd /catkin_ws/src && \
 RUN cd /catkin_ws && \
    /bin/bash -c 'source /opt/ros/melodic/setup.bash;catkin_make --force-cmake'
 RUN echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
+
 
 #######################################################################
 ##                           ros settings                            ##
