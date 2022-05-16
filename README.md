@@ -2,9 +2,8 @@
 Docker for utilizing azure kinect and body track on ros
 
 # Environment 
-* microsoft/Azure Kinect Sensor SDK Version : [1.3](https://github.com/microsoft/Azure-Kinect-Sensor-SDK/tree/release/1.3.x)
-* microsoft/Azure Kinect Body Tracking SDK Version : 1.0
-* microsoft/[Azure Kinect Samples](https://github.com/microsoft/Azure-Kinect-Samples) : Enable (Build ◎)
+* microsoft/Azure Kinect Sensor SDK Version : 1.4
+* microsoft/Azure Kinect Body Tracking SDK Version : 1.1
 * microsoft/[Azure_Kinect_ROS_Driver](https://github.com/microsoft/Azure_Kinect_ROS_Driver) : Enable (Build ◎)
     * Body Track : Enable (Build ◎)
 * Nvidia Driver : 440
