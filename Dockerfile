@@ -108,8 +108,11 @@ RUN apt-get update && apt-get install -y \
     gcc-multilib-arm-linux-gnueabihf \
     g++-multilib-arm-linux-gnueabihf && \
    rm -rf /var/lib/apt/lists/*
-
+RUN add-apt-repository ppa:ubuntu-x-swat/updates
+RUN apt-get update && \
+    apt-get dist-upgrade -y
 RUN apt-get update && apt-get install -y \
+    freeglut3 \
     freeglut3-dev \
     libgl1-mesa-dev \
     mesa-common-dev \
@@ -124,12 +127,12 @@ RUN apt-get update && apt-get install -y \
     usbutils \
     libusb-1.0-0-dev \
     openssl \
-    libssl-dev && \
+    libssl-dev \
+    mesa-utils \
+    x11-apps && \
     rm -rf /var/lib/apt/lists/*
 
-RUN add-apt-repository ppa:ubuntu-x-swat/updates
-RUN apt-get update && \
-    apt-get dist-upgrade -y
+
 
 RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 RUN apt-add-repository https://packages.microsoft.com/ubuntu/18.04/prod
