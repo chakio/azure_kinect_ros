@@ -1,5 +1,6 @@
  
-FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
+# FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:11.5.0-cudnn8-runtime-ubuntu18.04
 
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 ARG DEBIAN_FRONTEND=noninteractive
@@ -8,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ##                    install essential packages                     ##
 #######################################################################
 RUN rm /etc/apt/sources.list.d/cuda.list
-RUN rm /etc/apt/sources.list.d/nvidia-ml.list
+# RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -126,6 +127,10 @@ RUN apt-get update && apt-get install -y \
     libssl-dev && \
     rm -rf /var/lib/apt/lists/*
 
+RUN add-apt-repository ppa:ubuntu-x-swat/updates
+RUN apt-get update && \
+    apt-get dist-upgrade -y
+
 RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 RUN apt-add-repository https://packages.microsoft.com/ubuntu/18.04/prod
 RUN apt-get update
@@ -135,7 +140,8 @@ RUN echo 'libk4abt1.0	libk4abt1.0/accepted-eula-hash	string	03a13b63730639eeb662
 RUN echo 'libk4abt1.1 libk4abt1.1/accepted-eula-hash string 03a13b63730639eeb6626d24fd45cf25131ee8e8e0df3f1b63f552269b176e38' | debconf-set-selections
 RUN apt-get install -y \
     libk4a1.4 \
-    libk4a1.4-dev \
+    libk4a1.4-dev
+RUN apt-get install -y \
     libk4abt1.1 \
     libk4abt1.1-dev
 
