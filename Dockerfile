@@ -1,6 +1,6 @@
  
 # FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
-FROM nvidia/cuda:11.5.0-cudnn8-runtime-ubuntu18.04
+FROM nvidia/cuda:11.5.0-cudnn8-runtime-ubuntu20.04
 
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 ARG DEBIAN_FRONTEND=noninteractive
@@ -15,7 +15,7 @@ RUN rm /etc/apt/sources.list.d/cuda.list
 RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     apt-utils \
-    python-pip \
+    python3-pip \
     build-essential \ 
     software-properties-common \
     apt-transport-https \
@@ -30,8 +30,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gedit \
     curl
 
-RUN python -m pip install --upgrade pip
-RUN apt-get update && apt-get install  -y python-ruamel.yaml
+# RUN python -m pip install --upgrade pip
+# RUN apt-get update && apt-get install  -y python-ruamel.yaml
 
 #######################################################################
 ##                       install nvidia docker                       ##
@@ -68,9 +68,9 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc
 RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
 RUN apt-get update && apt-get install -y \
-    python-rosinstall \
-    python-rosdep \
-    python-vcstools 
+    python3-rosinstall \
+    python3-rosdep \
+    python3-vcstools 
 
 # setup environment
 ENV LANG C.UTF-8
@@ -81,7 +81,7 @@ RUN rosdep init
 RUN rosdep update
 
 # install ros packages
-ENV ROS_DISTRO melodic
+ENV ROS_DISTRO noetic
  
 
 # install bootstrap tools
