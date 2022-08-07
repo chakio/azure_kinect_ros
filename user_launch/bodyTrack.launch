@@ -30,7 +30,7 @@ Licensed under the MIT License.
   <arg name="depth_unit"              default="16UC1" />          <!-- Depth distance units. Options are: "32FC1" (32 bit float metre) or "16UC1" (16 bit integer millimetre) -->
   <arg name="color_enabled"           default="true" />           <!-- Enable or disable the color camera -->
   <arg name="color_format"            default="bgra" />           <!-- The format of RGB camera. Valid options: bgra, jpeg -->
-  <arg name="color_resolution"        default="720P" />          <!-- Resolution at which to run the color camera. Valid options: 720P, 1080P, 1440P, 1536P, 2160P, 3072P -->
+  <arg name="color_resolution"        default="1080P" />          <!-- Resolution at which to run the color camera. Valid options: 720P, 1080P, 1440P, 1536P, 2160P, 3072P -->
   <arg name="fps"                     default="30" />              <!-- FPS to run both cameras at. Valid options are 5, 15, and 30 -->
   <arg name="point_cloud"             default="true" />           <!-- Generate a point cloud from depth data. Requires depth_enabled -->
   <arg name="rgb_point_cloud"         default="true" />           <!-- Colorize the point cloud using the RBG camera. Requires color_enabled and depth_enabled -->
@@ -70,4 +70,28 @@ Licensed under the MIT License.
     <param name="wired_sync_mode" type="int" value="$(arg wired_sync_mode)"/>
     <param name="subordinate_delay_off_master_usec" type="int" value="$(arg subordinate_delay_off_master_usec)"/>
   </node>
+  <arg name="display" default="0" />
+  <arg name="rect0_size_x" default="0.030" />
+  <arg name="rect0_size_y" default="0.030" />
+  <arg name="grid0_size_x" default="13" />
+  <arg name="grid0_size_y" default="8" />
+  <arg name="frame_id" default="rgb_camera_link" />
+  <arg name="image" default="/rgb/image_raw" />
+  <arg name="camera_info" default="/rgb/camera_info" />
+  <arg name="group" default="/" />
+  <group ns="$(arg group)">
+    <param name="display" value="$(arg display)" />
+    <param name="rect0_size_x" value="$(arg rect0_size_x)" />
+    <param name="rect0_size_y" value="$(arg rect0_size_y)" />
+    <param name="grid0_size_x" value="$(arg grid0_size_x)" />
+    <param name="grid0_size_y" value="$(arg grid0_size_y)" />
+    <param name="frame_id" value="$(arg frame_id)" />
+    <node name="checkerboard_detector" pkg="checkerboard_detector"
+          type="checkerboard_detector">
+      <remap from="image" to="$(arg image)" />
+      <remap from="camera_info" to="$(arg camera_info)" />
+    </node>
+  </group>
+  <node name="tf_publisher" pkg="azure_kinect_ros_driver" type="tf_publisher.py"/>
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find azure_kinect_ros_driver)/rviz/bodyTrack.rviz" />
 </launch>

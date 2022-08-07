@@ -16,6 +16,9 @@ if [ $? -ne 0 ]; then
     -v /etc/group:/etc/group:ro \
     -v /etc/passwd:/etc/passwd:ro \
     -v "/$(pwd)/user_launch/:/catkin_ws/src/Azure_Kinect_ROS_Driver/launch/user_launch" \
+    -v "/$(pwd)/scripts/:/catkin_ws/src/Azure_Kinect_ROS_Driver/scripts/scripts" \
+    -v "/$(pwd)/rviz/:/catkin_ws/src/Azure_Kinect_ROS_Driver/rviz" \
+    -v "/$(pwd)/pose_data/:/pose_data" \
     --net host \
     chakio/azure_kinect_ros:latest
 else
@@ -34,6 +37,9 @@ else
     -v /etc/group:/etc/group:ro \
     -v /etc/passwd:/etc/passwd:ro \
     -v "/$(pwd)/user_launch/:/catkin_ws/src/Azure_Kinect_ROS_Driver/launch/user_launch" \
+    -v "/$(pwd)/scripts/:/catkin_ws/src/Azure_Kinect_ROS_Driver/scripts/scripts" \
+    -v "/$(pwd)/rviz/:/catkin_ws/src/Azure_Kinect_ROS_Driver/rviz" \
+    -v "/$(pwd)/pose_data/:/pose_data" \
     --net host \
     chakio/azure_kinect_ros:latest
 fi

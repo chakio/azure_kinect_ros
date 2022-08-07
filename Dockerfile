@@ -170,6 +170,12 @@ RUN apt-get install -y \
 
 # RUN cp -r /install/libk4abt1.0/usr/bin/dnn_model_2_0.onnx  /usr/bin/
 
+
+#######################################################################
+##                   install additional ros package                  ##
+#######################################################################
+RUN apt-get update && apt-get install -y \
+    ros-melodic-checkerboard-detector
 #######################################################################
 ##                            cleaning up                            ##
 #######################################################################
