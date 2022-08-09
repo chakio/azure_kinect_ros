@@ -90,6 +90,7 @@ class PoseSaver:
             writer = csv.writer(f)
             for human_pose_index in range(len(self.human_poses)):
                 writer.writerow(self.human_poses[human_pose_index].get_string_list())
+            f.close()
 
 if __name__ == '__main__':
     rospy.init_node("pose_saver")
