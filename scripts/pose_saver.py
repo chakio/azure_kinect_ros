@@ -64,7 +64,7 @@ class PoseSaver:
         for joint_num in range(32):
             frame_name = "1"+str(joint_num).zfill(2)
             try:
-                (trans,rot) = self.listener.lookupTransform(frame_name, '/checker_board', rospy.Time(0))
+                (trans,rot) = self.listener.lookupTransform('/checker_board', frame_name, rospy.Time(0))
                 joint_pose = JointPose()
                 joint_pose.name = frame_name
                 joint_pose.position = [trans[0],trans[1],trans[2]]

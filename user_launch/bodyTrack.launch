@@ -71,10 +71,10 @@ Licensed under the MIT License.
     <param name="subordinate_delay_off_master_usec" type="int" value="$(arg subordinate_delay_off_master_usec)"/>
   </node>
   <arg name="display" default="0" />
-  <arg name="rect0_size_x" default="0.030" />
-  <arg name="rect0_size_y" default="0.030" />
-  <arg name="grid0_size_x" default="13" />
-  <arg name="grid0_size_y" default="8" />
+  <arg name="rect0_size_x" default="0.047" />
+  <arg name="rect0_size_y" default="0.047" />
+  <arg name="grid0_size_x" default="7" />
+  <arg name="grid0_size_y" default="4" />
   <arg name="frame_id" default="rgb_camera_link" />
   <arg name="image" default="/rgb/image_raw" />
   <arg name="camera_info" default="/rgb/camera_info" />
